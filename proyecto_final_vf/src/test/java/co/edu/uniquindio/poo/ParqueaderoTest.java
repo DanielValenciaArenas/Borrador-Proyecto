@@ -25,7 +25,8 @@ public class ParqueaderoTest {
     private static final Logger LOG = Logger.getLogger(ParqueaderoTest.class.getName());
 
     @Test
-    public void testCrearPuestos() {
+    public void crearPuestos() {
+    LOG.info("Iniciado test crearPuestos");
     // Definir tarifas
     double tarifaHoraCarro = 2000.0;
     double tarifaHoraMotoClasica = 1000.0;
@@ -53,10 +54,13 @@ public class ParqueaderoTest {
             System.out.println("Puesto (" + i + "," + j + "): " + puesto.getEstadoPuesto());
             }   
         }
+
+    LOG.info("Finalizando test crearPuestos");
     }
 
     @Test
-    public void testRegistrarEntrada() {
+    public void registrarEntrada() {
+    LOG.info("Iniciado test registrarEntrada");
     // Definir tarifas
     double tarifaHoraCarro = 2000.0;
     double tarifaHoraMotoClasica = 1000.0;
@@ -98,39 +102,13 @@ public class ParqueaderoTest {
     }
     assertTrue(carroFound);
     assertTrue(motoFound);
-}
 
-    @Test
-    public void modificacionTarifasAdministrador() {
-        // Precios iniciales de las tarifas por hora
-        double tarifaHoraCarro = 7000.0;
-        double tarifaHoraMotoClasica = 3000.0;
-        double tarifaHoraMotoHibrida = 1400.0;
-
-        // Filas y columnas que tendrá el parqueadero
-        int filasPuestos = 3;
-        int columnasPuestos = 3;
-
-        // Tarifa genérica inicial
-        Tarifa tarifaParqueadero = new Tarifa(tarifaHoraCarro, tarifaHoraMotoClasica, tarifaHoraMotoHibrida, null);
-
-        // Creación del administrador y del parqueadero
-        Administrador administradorParqueadero = new Administrador("Admin", tarifaParqueadero);
-        Parqueadero parqueadero = new Parqueadero("SuperParqueadero", tarifaParqueadero, filasPuestos, columnasPuestos, administradorParqueadero);
-
-        // Modificación de las tarifas por parte del administrador
-        administradorParqueadero.modificarTarifaCarro(10000.0);
-        administradorParqueadero.modificarTarifaMotoClasica(500.0);
-        administradorParqueadero.modificarTarifaMotoHibrida(1200.0);
-
-        // Verificar que las tarifas se han modificado correctamente
-        assertEquals(10000.0, tarifaParqueadero.getTarifaHoraCarro());
-        assertEquals(500.0, tarifaParqueadero.getTarifaHoraMotoClasica());
-        assertEquals(1200.0, tarifaParqueadero.getTarifaHoraMotoHibrida());
+    LOG.info("Finalizando test registrarEntrada");
     }
 
     @Test
-    void testRegistrarSalida() {
+    public void registrarSalida() {
+    LOG.info("Iniciado test registrarSalida");
     // Definir tarifas
     double tarifaHoraCarro = 2000.0;
     double tarifaHoraMotoClasica = 1000.0;
@@ -162,10 +140,46 @@ public class ParqueaderoTest {
     
     // Comentario para imprimir la salida de la moto
     System.out.println("El vehículo con placa " + vehiculo2.getPlaca() + " de tipo " + vehiculo2.getClass().getSimpleName() + " salió del parqueadero.");
+
+    LOG.info("Finalizando test registrarSalida");
+
     }
 
     @Test
+    public void modificacionTarifasPorAdministrador() {
+        LOG.info("Iniciado test modificacionTarifasPorAdministrador");
+        // Precios iniciales de las tarifas por hora
+        double tarifaHoraCarro = 7000.0;
+        double tarifaHoraMotoClasica = 3000.0;
+        double tarifaHoraMotoHibrida = 1400.0;
+
+        // Filas y columnas que tendrá el parqueadero
+        int filasPuestos = 3;
+        int columnasPuestos = 3;
+
+        // Tarifa genérica inicial
+        Tarifa tarifaParqueadero = new Tarifa(tarifaHoraCarro, tarifaHoraMotoClasica, tarifaHoraMotoHibrida, null);
+
+        // Creación del administrador y del parqueadero
+        Administrador administradorParqueadero = new Administrador("Admin", tarifaParqueadero);
+        Parqueadero parqueadero = new Parqueadero("SuperParqueadero", tarifaParqueadero, filasPuestos, columnasPuestos, administradorParqueadero);
+
+        // Modificación de las tarifas por parte del administrador
+        administradorParqueadero.modificarTarifaCarro(10000.0);
+        administradorParqueadero.modificarTarifaMotoClasica(500.0);
+        administradorParqueadero.modificarTarifaMotoHibrida(1200.0);
+
+        // Verificar que las tarifas se han modificado correctamente
+        assertEquals(10000.0, tarifaParqueadero.getTarifaHoraCarro());
+        assertEquals(500.0, tarifaParqueadero.getTarifaHoraMotoClasica());
+        assertEquals(1200.0, tarifaParqueadero.getTarifaHoraMotoHibrida());
+
+        LOG.info("Finalizando test modificacionTarifasPorAdministrador");
+    }
+    
+    @Test
     public void identificarPropietario() {
+        LOG.info("Iniciado test identificarPropietario");
         // Definir tarifas
         double tarifaHoraCarro = 2000.0;
         double tarifaHoraMotoClasica = 1000.0;
@@ -191,6 +205,8 @@ public class ParqueaderoTest {
         // Verificar el propietario del vehículo en el puesto (3, 2)
         String propietario = parqueadero.identificarPropietario(3, 2);
         assertEquals("Juan Perez", propietario);
+
+        LOG.info("Finalizando test identificarPropietario");
     }
     
     @Test
