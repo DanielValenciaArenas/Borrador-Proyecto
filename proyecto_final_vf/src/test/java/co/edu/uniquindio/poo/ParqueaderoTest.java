@@ -22,7 +22,64 @@ import org.junit.jupiter.api.Test;
 public class ParqueaderoTest {
     private static final Logger LOG = Logger.getLogger(ParqueaderoTest.class.getName());
 
+    @Test
+    public void modificacionTarifasAdministrador() {
+        // Precios iniciales de las tarifas por hora
+        double tarifaHoraCarro = 7000.0;
+        double tarifaHoraMotoClasica = 3000.0;
+        double tarifaHoraMotoHibrida = 1400.0;
 
+        // Filas y columnas que tendrá el parqueadero
+        int filasPuestos = 3;
+        int columnasPuestos = 3;
+
+        // Tarifa genérica inicial
+        Tarifa tarifaParqueadero = new Tarifa(tarifaHoraCarro, tarifaHoraMotoClasica, tarifaHoraMotoHibrida, null);
+
+        // Creación del administrador y del parqueadero
+        Administrador administradorParqueadero = new Administrador("Admin", tarifaParqueadero);
+        Parqueadero parqueadero = new Parqueadero("SuperParqueadero", tarifaParqueadero, filasPuestos, columnasPuestos, administradorParqueadero);
+
+        // Modificación de las tarifas por parte del administrador
+        administradorParqueadero.modificarTarifaCarro(10000.0);
+        administradorParqueadero.modificarTarifaMotoClasica(500.0);
+        administradorParqueadero.modificarTarifaMotoHibrida(1200.0);
+
+        // Verificar que las tarifas se han modificado correctamente
+        assertEquals(10000.0, tarifaParqueadero.getTarifaHoraCarro());
+        assertEquals(500.0, tarifaParqueadero.getTarifaHoraMotoClasica());
+        assertEquals(1200.0, tarifaParqueadero.getTarifaHoraMotoHibrida());
+    }
+
+    @Test
+    public void identificarPropietario() {
+        // Definir tarifas
+        double tarifaHoraCarro = 2000.0;
+        double tarifaHoraMotoClasica = 1000.0;
+        double tarifaHoraMotoHibrida = 1400.0;
+
+        // Tarifa genérica
+        Tarifa tarifaParqueadero = new Tarifa(tarifaHoraCarro, tarifaHoraMotoClasica, tarifaHoraMotoHibrida, null);
+
+        // Crear administrador
+        Administrador administradorParqueadero = new Administrador("Admin", tarifaParqueadero);
+
+        // Crear parqueadero
+        Parqueadero parqueadero = new Parqueadero("SuperParqueadero", tarifaParqueadero, 6, 7, administradorParqueadero);
+
+        // Crear propietario y vehículo
+        Propietario propietario1 = new Propietario("Juan Perez");
+        Vehiculo vehiculo1 = new Carro("ABC123", "Toyota", propietario1);
+        
+        // Asignar vehículo a un puesto específico
+        Puesto puesto1 = new Puesto(3, 2, EstadoPuesto.OCUPADO, vehiculo1);
+        parqueadero.getPuestos()[3][2] = puesto1;
+
+        // Verificar el propietario del vehículo en el puesto (3, 2)
+        String propietario = parqueadero.identificarPropietario(3, 2);
+        assertEquals("Juan Perez", propietario);
+    }
+    
     @Test
     public void generarReporteDiario() {
         LOG.info("Iniciado test generarReporteDiario");
@@ -129,6 +186,4 @@ public class ParqueaderoTest {
         LOG.info("Finalizando test generarReporteDiario");
     }
 
-    
-    
 }

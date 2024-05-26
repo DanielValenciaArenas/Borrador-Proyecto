@@ -106,6 +106,20 @@ import java.util.LinkedList;
         }
     }
 
+    /*
+     * Método para encontrar un puesto Disponible
+     */
+    private Puesto encontrarPuestoDisponible() {
+        for (int i = 0; i < puestos.length; i++) {
+            for (int j = 0; j < puestos[i].length; j++) {
+                if (puestos[i][j].getEstadoPuesto() == EstadoPuesto.VACIO) {
+                    return puestos[i][j];
+                }
+            }
+        }
+        return null; // Retorna null si no se encuentra ningún puesto disponible
+    }
+
 
     /*
      * Método para registrar el ingreso de un vehículo al parqueadero
@@ -131,17 +145,6 @@ import java.util.LinkedList;
         } else {
             System.out.println("No hay puestos disponibles en el parqueadero.");
         }
-    }
-
-    private Puesto encontrarPuestoDisponible() {
-        for (int i = 0; i < puestos.length; i++) {
-            for (int j = 0; j < puestos[i].length; j++) {
-                if (puestos[i][j].getEstadoPuesto() == EstadoPuesto.VACIO) {
-                    return puestos[i][j];
-                }
-            }
-        }
-        return null; // Retorna null si no se encuentra ningún puesto disponible
     }
 
     /*
@@ -174,6 +177,22 @@ import java.util.LinkedList;
         puesto.setVehiculo(null);
     }
 
+     /*
+     * Método para identificar el propietario de un vehículo por su posición
+     */
+     public String identificarPropietario(int fila, int columna) {
+        assert (fila >= 0 && fila < puestos.length && columna >= 0 && columna < puestos[0].length) : "Coordenadas del puesto fuera de rango.";
+    
+        Puesto puesto = puestos[fila][columna];
+        Vehiculo vehiculo = puesto.getVehiculo();
+    
+        if (vehiculo != null) {
+            return vehiculo.getPropietario().getNombre();
+        } else {
+            return "No hay vehículo en el puesto especificado";
+        }
+    }
+
 
     public Collection<Registro> reporteDiario(Collection<Registro> listaRegistros) {
         Collection<Registro> listaReporteDiario = new LinkedList<>();
@@ -191,12 +210,16 @@ import java.util.LinkedList;
         return listaReporteDiario; // Devolver la lista de registros del día
     }
 
-    // Método para agregar un registro al parqueadero
+   /*
+    * Método para agregar un registro a la lista de registros del parqueadero
+    */
     public void agregarRegistro(Registro registro) {
         listaRegistros.add(registro);
     }
 
-    // Método para generar reporte diario de registros
+    /*
+     * Método para generar un reporte diario del dinero recaudado
+     */
     public double generarReporteDiario(LocalDate fecha) {
         double recaudoDiario = 0;
         for (Registro registro : listaRegistros) {
@@ -209,7 +232,9 @@ import java.util.LinkedList;
         return recaudoDiario;
     }
 
-    // Método para generar reporte mensual de registros
+    /*
+     * Método para generar un reporte mensual del dinero recaudado
+     */
     public double generarReporteMensual(int mes) {
         assert mes > 0 && mes <= 12;
 
