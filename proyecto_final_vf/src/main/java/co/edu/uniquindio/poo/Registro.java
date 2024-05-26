@@ -23,7 +23,7 @@ public class Registro {
      */
     public Registro(LocalDateTime momentoEntrada, LocalDateTime momentoSalida, Puesto puesto, Vehiculo vehiculo, Tarifa tarifa) {
         this.momentoEntrada = momentoEntrada;
-        this.momentoSalida = momentoSalida != null ? momentoSalida:null;
+        this.momentoSalida = momentoSalida;
         this.puesto = puesto;
         this.vehiculo = vehiculo;
         this.tarifa = tarifa;

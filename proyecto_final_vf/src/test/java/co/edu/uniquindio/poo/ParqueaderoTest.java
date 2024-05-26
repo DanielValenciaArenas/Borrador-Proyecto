@@ -1,10 +1,12 @@
 package co.edu.uniquindio.poo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.logging.Logger;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +23,82 @@ import org.junit.jupiter.api.Test;
  */
 public class ParqueaderoTest {
     private static final Logger LOG = Logger.getLogger(ParqueaderoTest.class.getName());
+
+    @Test
+    public void testCrearPuestos() {
+    // Definir tarifas
+    double tarifaHoraCarro = 2000.0;
+    double tarifaHoraMotoClasica = 1000.0;
+    double tarifaHoraMotoHibrida = 1400.0;
+
+    // Tarifa genérica
+    Tarifa tarifaParqueadero = new Tarifa(tarifaHoraCarro, tarifaHoraMotoClasica, tarifaHoraMotoHibrida, null);
+
+    // Crear administrador
+    Administrador administradorParqueadero = new Administrador("Admin", tarifaParqueadero);
+
+    // Crear parqueadero
+    Parqueadero parqueadero = new Parqueadero("SuperParqueadero", tarifaParqueadero, 4, 4, administradorParqueadero);
+
+    Puesto[][] puestos = parqueadero.getPuestos();
+    assertNotNull(puestos);
+    assertEquals(4, puestos.length);
+    assertEquals(4, puestos[0].length);
+    assertEquals(EstadoPuesto.VACIO, puestos[0][0].getEstadoPuesto());
+
+    // Imprimir los puestos y su estado
+    for (int i = 0; i < puestos.length && i < 4; i++) {
+        for (int j = 0; j < puestos[i].length && j < 4; j++) {
+            Puesto puesto = puestos[i][j];
+            System.out.println("Puesto (" + i + "," + j + "): " + puesto.getEstadoPuesto());
+            }   
+        }
+    }
+
+    @Test
+    public void testRegistrarEntrada() {
+    // Definir tarifas
+    double tarifaHoraCarro = 2000.0;
+    double tarifaHoraMotoClasica = 1000.0;
+    double tarifaHoraMotoHibrida = 1400.0;
+
+    // Tarifa genérica
+    Tarifa tarifaParqueadero = new Tarifa(tarifaHoraCarro, tarifaHoraMotoClasica, tarifaHoraMotoHibrida, null);
+
+    // Crear administrador
+    Administrador administradorParqueadero = new Administrador("Admin", tarifaParqueadero);
+
+    // Crear parqueadero
+    Parqueadero parqueadero = new Parqueadero("SuperParqueadero", tarifaParqueadero, 6, 7, administradorParqueadero);
+
+    // Crear propietario y vehículos
+    Propietario propietario1 = new Propietario("Juan Perez");
+    Propietario propietario2 = new Propietario("Edier");
+    Vehiculo vehiculo1 = new Carro("ABC123", "Toyota", propietario1);
+    Vehiculo vehiculo2 = new Moto("JQR314", "Kawasaki", propietario2, TipoMoto.HIBRIDA);
+
+    parqueadero.RegistrarEntrada(vehiculo1);
+    parqueadero.RegistrarEntrada(vehiculo2);
+
+    Puesto[][] puestos = parqueadero.getPuestos();
+    boolean carroFound = false;
+    boolean motoFound = false;
+    for (int i = 0; i < puestos.length; i++) {
+        for (int j = 0; j < puestos[i].length; j++) {
+            if (puestos[i][j].getVehiculo() != null) {
+                Vehiculo vehiculo = puestos[i][j].getVehiculo();
+                System.out.println("El vehículo con placa " + vehiculo.getPlaca() + " y tipo " + vehiculo.getClass().getSimpleName() + " está en el puesto (" + i + "," + j + ")");
+                if (vehiculo instanceof Carro && vehiculo.getPlaca().equals("ABC123")) {
+                    carroFound = true;
+                } else if (vehiculo instanceof Moto && vehiculo.getPlaca().equals("JQR314")) {
+                    motoFound = true;
+                }
+            }
+        }
+    }
+    assertTrue(carroFound);
+    assertTrue(motoFound);
+}
 
     @Test
     public void modificacionTarifasAdministrador() {
@@ -49,6 +127,41 @@ public class ParqueaderoTest {
         assertEquals(10000.0, tarifaParqueadero.getTarifaHoraCarro());
         assertEquals(500.0, tarifaParqueadero.getTarifaHoraMotoClasica());
         assertEquals(1200.0, tarifaParqueadero.getTarifaHoraMotoHibrida());
+    }
+
+    @Test
+    void testRegistrarSalida() {
+    // Definir tarifas
+    double tarifaHoraCarro = 2000.0;
+    double tarifaHoraMotoClasica = 1000.0;
+    double tarifaHoraMotoHibrida = 1400.0;
+
+    // Tarifa genérica
+    Tarifa tarifaParqueadero = new Tarifa(tarifaHoraCarro, tarifaHoraMotoClasica, tarifaHoraMotoHibrida, null);
+
+    // Crear administrador
+    Administrador administradorParqueadero = new Administrador("Admin", tarifaParqueadero);
+
+    // Crear parqueadero
+    Parqueadero parqueadero = new Parqueadero("SuperParqueadero", tarifaParqueadero, 6, 7, administradorParqueadero);
+
+    // Crear propietario y vehículos
+    Propietario propietario1 = new Propietario("Juan Perez");
+    Propietario propietario2 = new Propietario("Edier");
+    Vehiculo vehiculo1 = new Carro("ABC123", "Toyota", propietario1);
+    Vehiculo vehiculo2 = new Moto("JQR314", "Kawasaki", propietario2, TipoMoto.HIBRIDA);
+
+    parqueadero.RegistrarEntrada(vehiculo1);
+    parqueadero.RegistrarEntrada(vehiculo2);
+
+    // Registrar la salida del vehículo 1
+    parqueadero.registrarSalida(vehiculo1);
+    parqueadero.registrarSalida(vehiculo2);
+
+    System.out.println("El vehículo con placa " + vehiculo1.getPlaca() + " de tipo " + vehiculo1.getClass().getSimpleName() + " salió del parqueadero.");
+    
+    // Comentario para imprimir la salida de la moto
+    System.out.println("El vehículo con placa " + vehiculo2.getPlaca() + " de tipo " + vehiculo2.getClass().getSimpleName() + " salió del parqueadero.");
     }
 
     @Test
@@ -119,11 +232,13 @@ public class ParqueaderoTest {
         parqueadero.agregarRegistro(registro1);
         parqueadero.agregarRegistro(registro2);
 
-        //Se calcula el reporte Diario de la fecha establecida
-        double recaudoDiario = parqueadero.generarReporteDiario(LocalDate.of(2024, 5, 24));
+        // Se calcula el reporte diario de la fecha establecida
+        Map<String, Double> reporteDiario = parqueadero.generarReporteDiario(LocalDate.of(2024, 5, 24));
 
-        //Se verifica  el valor mediante un assertEquals
-        assertEquals(15000.0, recaudoDiario);
+        // Verificaciones
+        assertEquals(8000.0, reporteDiario.get("Carro"));
+        assertEquals(0.0, reporteDiario.get("MotoClasica"));
+        assertEquals(7000.0, reporteDiario.get("MotoHibrida"));
 
         LOG.info("Finalizando test generarReporteDiario");
     }

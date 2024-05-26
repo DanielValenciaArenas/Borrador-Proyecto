@@ -3,7 +3,9 @@ package co.edu.uniquindio.poo;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 /*
  * Clase principal que agrupa la info del parqueadero
@@ -220,16 +222,39 @@ import java.util.LinkedList;
     /*
      * Método para generar un reporte diario del dinero recaudado
      */
-    public double generarReporteDiario(LocalDate fecha) {
-        double recaudoDiario = 0;
+     public Map<String, Double> generarReporteDiario(LocalDate fecha) {
+
+        Map<String, Double> reporte = new HashMap<>();
+        reporte.put("Carro", 0.0);
+        reporte.put("MotoClasica", 0.0);
+        reporte.put("MotoHibrida", 0.0);
+
         for (Registro registro : listaRegistros) {
+
             LocalDate fechaRegistro = registro.getMomentoEntrada().toLocalDate();
+
             if (fechaRegistro.equals(fecha)) {
-                recaudoDiario += registro.costoTotalEstacionamiento();
+                Vehiculo vehiculo = registro.getVehiculo();
+                double costo = registro.costoTotalEstacionamiento();
+
+                if (vehiculo instanceof Carro) {
+                    reporte.put("Carro", reporte.get("Carro") + costo);
+                } else if (vehiculo instanceof Moto) {
+                    Moto moto = (Moto) vehiculo;
+                    if (moto.getTipoMoto() == TipoMoto.CLASICA) {
+                        reporte.put("MotoClasica", reporte.get("MotoClasica") + costo);
+                    } else if (moto.getTipoMoto() == TipoMoto.HIBRIDA) {
+                        reporte.put("MotoHibrida", reporte.get("MotoHibrida") + costo);
+                    }
+                }
             }
         }
-        System.out.println("Reporte Diario (" + fecha + "): Recaudo Total = $" + recaudoDiario);
-        return recaudoDiario;
+        System.out.println("Reporte diario por vehiculo:");
+        System.out.println("Carro: " + reporte.get("Carro"));
+        System.out.println("Moto Clasica: " + reporte.get("MotoClasica"));
+        System.out.println("Moto Hibrida: " + reporte.get("MotoHibrida"));
+        
+        return reporte;
     }
 
     /*
