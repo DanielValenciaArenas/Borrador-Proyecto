@@ -24,6 +24,9 @@ import org.junit.jupiter.api.Test;
 public class ParqueaderoTest {
     private static final Logger LOG = Logger.getLogger(ParqueaderoTest.class.getName());
 
+    /*
+     * Prueba del método CREARPUESTOS
+     */
     @Test
     public void crearPuestos() {
     LOG.info("Iniciado test crearPuestos");
@@ -57,6 +60,35 @@ public class ParqueaderoTest {
 
     LOG.info("Finalizando test crearPuestos");
     }
+
+    @Test
+    public void verificarDisponibilidadPuesto() {
+
+    LOG.info("Iniciado test verificarDisponibilidadPuesto"); 
+    // Filas y columnas que tendrá el parqueadero
+    int filasPuestos = 10;
+    int columnasPuestos = 10;
+
+    // Tarifa genérica
+    Tarifa tarifaParqueadero = new Tarifa(300.0, 300.0, 300.0, null);
+
+    // Creación del administrador y del parqueadero
+    Administrador administradorParqueadero = new Administrador("Admin", tarifaParqueadero);
+    Parqueadero parqueadero = new Parqueadero("SuperParqueadero", tarifaParqueadero, filasPuestos, columnasPuestos, administradorParqueadero);
+
+    // Ocupar un puesto específico
+    Vehiculo vehiculo1 = new Carro("BBBF5", "MOTOROLA", new Propietario("Carla"));
+    Puesto puestoOcupado = new Puesto(4, 4, EstadoPuesto.OCUPADO, vehiculo1);
+    parqueadero.getPuestos()[4][4] = puestoOcupado;
+
+    //Verificar la disponibilidad del puesto
+    String disponibilidad = parqueadero.verificarDisponibilidadPuesto(4, 4);
+    assertEquals("El puesto en la posición (4, 4) está disponible.", disponibilidad);
+
+
+    LOG.info("Finalizando test verificarDisponibilidadPuesto");
+    }
+
 
     @Test
     public void registrarEntrada() {
@@ -104,6 +136,7 @@ public class ParqueaderoTest {
     assertTrue(motoFound);
 
     LOG.info("Finalizando test registrarEntrada");
+
     }
 
     @Test

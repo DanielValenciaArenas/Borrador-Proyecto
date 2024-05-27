@@ -127,21 +127,21 @@ import java.util.Map;
      * Método para registrar el ingreso de un vehículo al parqueadero
      */
     public void RegistrarEntrada(Vehiculo vehiculo) {
-        // Encontrar un puesto disponible
+        // Encuentra un puesto disponible
         Puesto puestoDisponible = encontrarPuestoDisponible();
 
         if (puestoDisponible != null) {
-            // Actualizar el estado del puesto
+            // Actualiza el estado del puesto
             puestoDisponible.setEstadoPuesto(EstadoPuesto.OCUPADO);
             puestoDisponible.setVehiculo(vehiculo);
 
-            // Obtener el momento de entrada
+            // Obtiene el momento de entrada
             LocalDateTime momentoEntrada = LocalDateTime.now();
 
-            // Crear un nuevo registro
+            // Crea un nuevo registro
             Registro nuevoRegistro = new Registro(momentoEntrada, null, puestoDisponible, vehiculo, tarifa);
 
-            // Agregar el registro a la lista de registros del parqueadero
+            // Agrega el registro a la lista de registros del parqueadero
             listaRegistros.add(nuevoRegistro);
             System.out.println("Se ha registrado el "+vehiculo+" Correctamente");
         } else {
@@ -157,9 +157,9 @@ import java.util.Map;
 
         for (Registro registro : listaRegistros) {
             if (registro.getVehiculo().equals(vehiculo) && registro.getMomentoSalida() == null) {
-                // Actualizar el momento de salida del registro
+                // Actualiza el momento de salida del registro
                 registro.setMomentoSalida(LocalDateTime.now());
-                // Liberar el puesto
+                // Libera el puesto
                 liberarPuesto(registro.getPuesto());
                 encontrado = true;
                 break;
@@ -193,23 +193,6 @@ import java.util.Map;
         } else {
             return "No hay vehículo en el puesto especificado";
         }
-    }
-
-
-    public Collection<Registro> reporteDiario(Collection<Registro> listaRegistros) {
-        Collection<Registro> listaReporteDiario = new LinkedList<>();
-        LocalDate hoy = LocalDate.now(); // Obtener la fecha actual
-
-        for (Registro registro : listaRegistros) {
-            // Extraer solo la parte de la fecha de 'momentoEntrada'
-            LocalDate fechaEntrada = registro.getMomentoEntrada().toLocalDate();
-            
-            if (fechaEntrada.equals(hoy)) { // Comparar la fecha del registro con la fecha actual
-                listaReporteDiario.add(registro); // Agregar el registro a la lista de reporte diario si es de hoy
-            }
-        }
-        
-        return listaReporteDiario; // Devolver la lista de registros del día
     }
 
    /*
