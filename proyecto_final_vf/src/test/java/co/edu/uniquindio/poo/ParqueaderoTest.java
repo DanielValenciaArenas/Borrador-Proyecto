@@ -116,7 +116,7 @@ public class ParqueaderoTest {
     Propietario propietario1 = new Propietario("Juan Perez");
     Propietario propietario2 = new Propietario("Edier");
     Vehiculo vehiculo1 = new Carro("ABC123", "Toyota", propietario1);
-    Vehiculo vehiculo2 = new Moto("JQR314", "Kawasaki", propietario2, TipoMoto.HIBRIDA);
+    Vehiculo vehiculo2 = new Moto("JQR314", "Kawasaki", propietario2, TipoMoto.HIBRIDA, 3.59);
 
     parqueadero.RegistrarEntrada(vehiculo1);
     parqueadero.RegistrarEntrada(vehiculo2);
@@ -167,7 +167,7 @@ public class ParqueaderoTest {
     Propietario propietario1 = new Propietario("Juan Perez");
     Propietario propietario2 = new Propietario("Edier");
     Vehiculo vehiculo1 = new Carro("ABC123", "Toyota", propietario1);
-    Vehiculo vehiculo2 = new Moto("JQR314", "Kawasaki", propietario2, TipoMoto.HIBRIDA);
+    Vehiculo vehiculo2 = new Moto("JQR314", "Kawasaki", propietario2, TipoMoto.HIBRIDA,2.10);
 
     parqueadero.RegistrarEntrada(vehiculo1);
     parqueadero.RegistrarEntrada(vehiculo2);
@@ -288,7 +288,7 @@ public class ParqueaderoTest {
         LocalDateTime momentoEntrada2 = LocalDateTime.of(2024, 5, 24, 10, 0);
         LocalDateTime momentoSalida2 = LocalDateTime.of(2024, 5, 24, 15, 10);
         Propietario propietario2 = new Propietario("Marlon");
-        Vehiculo vehiculo2 = new Moto("REW23", "DUCATI", propietario2, TipoMoto.HIBRIDA);
+        Vehiculo vehiculo2 = new Moto("REW23", "DUCATI", propietario2, TipoMoto.HIBRIDA,3.3);
         Puesto puesto2 = new Puesto(1, 1, EstadoPuesto.OCUPADO, vehiculo2);
         Tarifa tarifaIngreso2 = new Tarifa(tarifaHoraCarro, tarifaHoraMotoClasica, tarifaHoraMotoHibrida, vehiculo2);
         Registro registro2 = new Registro(momentoEntrada2, momentoSalida2, puesto2, vehiculo2, tarifaIngreso2);
@@ -341,7 +341,7 @@ public class ParqueaderoTest {
         LocalDateTime momentoEntrada2 = LocalDateTime.of(2024, 8, 14, 11, 30);
         LocalDateTime momentoSalida2 = LocalDateTime.of(2024, 8, 14, 14, 10);
         Propietario propietario2 = new Propietario("Roman");
-        Vehiculo vehiculo2 = new Moto("FNCX3", "APRILIA", propietario2, TipoMoto.CLASICA);
+        Vehiculo vehiculo2 = new Moto("FNCX3", "APRILIA", propietario2, TipoMoto.CLASICA, 7.1);
         Puesto puesto2 = new Puesto(1, 1, EstadoPuesto.OCUPADO, vehiculo2);
         Tarifa tarifaIngreso2 = new Tarifa(tarifaHoraCarro, tarifaHoraMotoClasica, tarifaHoraMotoHibrida, vehiculo2);
         Registro registro2 = new Registro(momentoEntrada2, momentoSalida2, puesto2, vehiculo2, tarifaIngreso2);
@@ -350,7 +350,7 @@ public class ParqueaderoTest {
         LocalDateTime momentoEntrada3 = LocalDateTime.of(2024, 2, 12, 19, 5);
         LocalDateTime momentoSalida3 = LocalDateTime.of(2024, 2, 12, 22, 32);
         Propietario propietario3= new Propietario("Allison");
-        Vehiculo vehiculo3 = new Moto("QDZS9", "SUZUKI", propietario3, TipoMoto.HIBRIDA);   
+        Vehiculo vehiculo3 = new Moto("QDZS9", "SUZUKI", propietario3, TipoMoto.HIBRIDA, 8.5);   
         Puesto puesto3 = new Puesto(3, 2, EstadoPuesto.OCUPADO, vehiculo3);
         Tarifa tarifaIngreso3 = new Tarifa(tarifaHoraCarro, tarifaHoraMotoClasica, tarifaHoraMotoHibrida, vehiculo3);
         Registro registro3 = new Registro(momentoEntrada3, momentoSalida3, puesto3, vehiculo3, tarifaIngreso3);
