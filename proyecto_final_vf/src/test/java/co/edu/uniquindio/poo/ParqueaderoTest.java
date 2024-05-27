@@ -25,7 +25,7 @@ public class ParqueaderoTest {
     private static final Logger LOG = Logger.getLogger(ParqueaderoTest.class.getName());
 
     /*
-     * Prueba del método CREARPUESTOS
+     * Prueba: CREAR_PUESTOS
      */
     @Test
     public void crearPuestos() {
@@ -61,6 +61,9 @@ public class ParqueaderoTest {
     LOG.info("Finalizando test crearPuestos");
     }
 
+    /*
+     * Prueba: VERIFICAR_DISPONIBILIDAD_PUESTO
+     */
     @Test
     public void verificarDisponibilidadPuesto() {
 
@@ -89,7 +92,9 @@ public class ParqueaderoTest {
     LOG.info("Finalizando test verificarDisponibilidadPuesto");
     }
 
-
+    /*
+     * Prueba: REGISTRAR_ENTRADA
+     */
     @Test
     public void registrarEntrada() {
     LOG.info("Iniciado test registrarEntrada");
@@ -136,9 +141,11 @@ public class ParqueaderoTest {
     assertTrue(motoFound);
 
     LOG.info("Finalizando test registrarEntrada");
-
     }
 
+    /*
+     * Prueba: REGISTRAR_SALIDA
+     */
     @Test
     public void registrarSalida() {
     LOG.info("Iniciado test registrarSalida");
@@ -178,6 +185,9 @@ public class ParqueaderoTest {
 
     }
 
+    /*
+     * Prueba: MODIFICACION_TARIFA_POR_ADMINISTRADOR
+     */
     @Test
     public void modificacionTarifasPorAdministrador() {
         LOG.info("Iniciado test modificacionTarifasPorAdministrador");
@@ -209,7 +219,10 @@ public class ParqueaderoTest {
 
         LOG.info("Finalizando test modificacionTarifasPorAdministrador");
     }
-    
+
+    /*
+     * Prueba: IDENTIFICAR_PROPIETARIO
+     */
     @Test
     public void identificarPropietario() {
         LOG.info("Iniciado test identificarPropietario");
@@ -241,7 +254,10 @@ public class ParqueaderoTest {
 
         LOG.info("Finalizando test identificarPropietario");
     }
-    
+
+    /*
+     * Prueba: GENERAR_REPORTE_DIARIO
+     */
     @Test
     public void generarReporteDiario() {
         LOG.info("Iniciado test generarReporteDiario");
@@ -292,6 +308,9 @@ public class ParqueaderoTest {
         LOG.info("Finalizando test generarReporteDiario");
     }
 
+    /*
+     * Prueba: GENERAR_REPORTE_MENSUAL
+     */
     @Test
     public void generarReporteMensual() {
         LOG.info("Iniciado test generarReporteMensual");

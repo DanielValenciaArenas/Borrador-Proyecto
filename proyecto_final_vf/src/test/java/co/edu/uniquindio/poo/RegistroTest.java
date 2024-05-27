@@ -20,6 +20,9 @@ import org.junit.jupiter.api.Test;
 public class RegistroTest {
     private static final Logger LOG = Logger.getLogger(RegistroTest.class.getName());
 
+    /*
+     * Prueba: COSTO_ESTADIA_VEHICULO
+     */
     @Test
     public void costoEstadiaVehiculo() {
         LOG.info("Iniciado test costoEstadiaVehiculo");
